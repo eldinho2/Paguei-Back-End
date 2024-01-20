@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "src/prisma.service";
 import { UsersService } from "src/users/users.service";
@@ -24,13 +24,15 @@ export class AuthService{
           })
 
           if (!users) {
-            throw new NotFoundException('user not found')
+            throw new HttpException('User not found', HttpStatus.NOT_FOUND);
           }
 
-          const validatePassword = await bcrypt.compare(password, users.hashedPassword)
+          if (password) {
+            const validatePassword = await bcrypt.compare(password, users.hashedPassword)
 
-          if (!validatePassword) {
-            throw new NotFoundException('Invalid password')
+            if (!validatePassword) {
+              throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+            }
           }
 
           return {
@@ -38,18 +40,21 @@ export class AuthService{
           }
      }
 
+     async register (createDto: RegisterUsersDto): Promise<any>{      
+      const createUser = new User();
 
+      createUser.email = createDto.email;
 
-     async register (createDto: RegisterUsersDto): Promise<any>{
-          const createUser = new User();
-    createUser.email = createDto.email;
-    createUser.password = await bcrypt.hash(createDto.password, 10);
+      if (createDto.password) {
+        createUser.password = await bcrypt.hash(createDto.password, 10);
+      }
 
-    const user = await this.usersService.createUser(createUser);
-
-    return {
-      token: this.jwtService.sign({ email: user.email }),
-    };
+      try{
+        const user = await this.usersService.createUser(createUser);
+        return this.jwtService.sign({ email: user.email })
+      } catch (error) {
+        throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
   }
      
 }
