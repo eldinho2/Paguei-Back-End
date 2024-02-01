@@ -9,7 +9,7 @@ export class UsersService{
      constructor(private prisma: PrismaService){}
 
      async getAllUser():Promise<User[]>{
-          return this.prisma.user.findMany()
+          return this.prisma.user.findMany();
      }
 
 
@@ -27,7 +27,8 @@ export class UsersService{
              return this.prisma.user.create({
                data: {
                   email: data.email,
-                  hashedPassword: data.password,
+                  name: data.name,
+                  picture: data.picture
                }
              });
      }
