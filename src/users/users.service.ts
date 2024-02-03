@@ -23,6 +23,9 @@ export class UsersService{
              if (existing) {
                throw new ConflictException('username already exists');
              }
+
+             console.log(data);
+             
          
              return this.prisma.user.create({
                data: {
