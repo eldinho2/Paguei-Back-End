@@ -35,6 +35,8 @@ export class AuthService{
       const createUser = new User();
 
       createUser.email = createDto.email;
+      createUser.name = createDto.name;
+      createUser.picture = createDto.picture;
 
       try{
         const user = await this.usersService.createUser(createUser);

@@ -9,8 +9,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
 
-
-
 @Module({
      controllers: [AuthController],
      providers:[AuthService, PrismaService,JwtStrategy,UsersService],
