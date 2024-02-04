@@ -8,6 +8,18 @@ export class UsersService{
 
      constructor(private prisma: PrismaService){}
 
+      async getUser(email:string){
+            const exists = await this.prisma.user.findUnique({
+                where:{
+                  email: email
+                }
+            })
+
+            if(exists){
+                 return true;
+            }
+      }
+
      async getAllUser():Promise<User[]>{
           return this.prisma.user.findMany();
      }
@@ -23,8 +35,6 @@ export class UsersService{
              if (existing) {
                throw new ConflictException('username already exists');
              }
-
-             console.log(data);
              
          
              return this.prisma.user.create({

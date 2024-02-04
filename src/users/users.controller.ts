@@ -25,4 +25,21 @@ export class UsersController {
                })
           }
      }
+
+     @Get('/user/:email')
+      async getUser(@Req() request: Request, @Res() response: Response):Promise<any>{
+            try{
+                const result = await this.userService.getUser(request.params.email);
+                return response.status(200).json({
+                      status: 'Ok!',
+                      message: 'Successfully fetch data!',
+                      result: result
+                })
+            }catch(err){
+                return response.status(500).json({
+                      status: 'Ok!',
+                      message : 'Internal Server Error!'
+                })
+            }
+}
 }
