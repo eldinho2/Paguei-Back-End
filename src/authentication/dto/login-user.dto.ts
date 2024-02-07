@@ -8,5 +8,5 @@ export class LoginDto {
   @IsString()
   name:string
   @IsString()
-  picture:string
+  image:string
 }

@@ -7,5 +7,5 @@ export class RegisterUsersDto {
   @IsString()
   name:string
   @IsString()
-  picture:string
+  image:string
 }

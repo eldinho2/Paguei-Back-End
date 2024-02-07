@@ -39,7 +39,7 @@ export class UsersService {
       data: {
         email: data.email,
         name: data.name,
-        picture: data.picture,
+        image: data.image,
       },
     });
 
