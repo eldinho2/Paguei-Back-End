@@ -16,6 +16,8 @@ export class UsersService {
     if (exists) {
       return true;
     }
+
+    return false;
   }
 
   async getAllUser(): Promise<User[]> {
