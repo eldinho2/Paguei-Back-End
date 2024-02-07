@@ -40,7 +40,8 @@ export class AuthService{
 
       try{
         const user = await this.usersService.createUser(createUser);
-        return this.jwtService.sign({ email: user.email })
+        const token = this.jwtService.sign({ email: user.email });
+        return {token: token}
       } catch (error) {
         throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
       }
