@@ -48,7 +48,7 @@ export class IncomesController {
   @UseGuards(JwtAuthGuard)
   async getAllIncomes(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.getAllUserIncomes();
+      const result = await this.usersService.getAllUserIncomes(request.body);
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',

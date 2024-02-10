@@ -1,6 +1,7 @@
 import { PrismaService } from 'src/prisma.service';
 import { Income } from './incomes.model';
 import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class IncomesService {
@@ -39,8 +40,12 @@ export class IncomesService {
     });
   }
 
-  async getAllUserIncomes() {
-    return this.prisma.expense.findMany();
+  async getAllUserIncomes(data: User) {
+    return this.prisma.income.findMany({
+      where: {
+        userId: data.email,
+      },
+    });
   }
 
 
