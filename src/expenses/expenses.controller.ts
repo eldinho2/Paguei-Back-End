@@ -30,7 +30,7 @@ export class ExpensesController {
   @UseGuards(JwtAuthGuard)
   async getAllExpenses(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.getAllUserExpensives();
+      const result = await this.usersService.getAllUserExpensives(request.body);
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',
