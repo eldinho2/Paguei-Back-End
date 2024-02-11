@@ -40,8 +40,7 @@ export class ExpensesService {
     });
   }
 
-  async getAllUserExpensives(data: User) {
-
+  async getAllUserExpensives(data: User) {    
     return this.prisma.expense.findMany({
       where: {
         userId: data.email,

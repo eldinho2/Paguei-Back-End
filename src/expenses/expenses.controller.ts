@@ -26,11 +26,18 @@ export class ExpensesController {
     }
   }
 
-  @Get('/get-all-expenses')
+  @Get('/get-all-expenses/:email')
   @UseGuards(JwtAuthGuard)
   async getAllExpenses(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.getAllUserExpensives(request.body);
+      const result = await this.usersService.getAllUserExpensives({
+        email: request.params.email,
+        id: "",
+        name: "",
+        image: "",
+        createdAt: undefined,
+        updateAt: undefined
+      });
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',
