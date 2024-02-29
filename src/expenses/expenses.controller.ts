@@ -26,6 +26,24 @@ export class ExpensesController {
     }
   }
 
+  @Get('/get-expense-by-month')
+  @UseGuards(JwtAuthGuard)
+  async getExpenseByMonth(@Req() request: Request, @Res() response: Response):Promise<any>{
+    try{
+      const result = await this.usersService.getExpenseByMonth(request.body.userId, request.body.month);
+      return response.status(200).json({
+        status: 'Ok!',
+        message: 'Successfully fetch data!',
+        result: result
+      })
+    }catch(err){
+      return response.status(500).json({
+        status: 'Ok!',
+        message : 'Internal Server Error!'
+      })
+    }
+  }
+
   @Get('/get-all-expenses/:email')
   @UseGuards(JwtAuthGuard)
   async getAllExpenses(@Req() request: Request, @Res() response: Response):Promise<any>{
