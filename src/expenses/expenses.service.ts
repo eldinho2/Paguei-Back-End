@@ -49,12 +49,12 @@ export class ExpensesService {
   }
 
 
-  async getExpenseByMonth(userId: string, month: number) {
-    const startDate = new Date(new Date().getFullYear(), month - 1, 1);
+  async getExpenseByMonth(data) {
+    const startDate = new Date(new Date().getFullYear(), data.month - 1, 1);
     const endDate = new Date(
       new Date().getFullYear(),
-      month,
-      0,
+      data.month,
+      0,  
       23,
       59,
       59,
@@ -63,7 +63,7 @@ export class ExpensesService {
 
     return this.prisma.expense.findMany({
       where: {
-        userId: userId,
+        userId: data.email,
         createdAt: {
           gte: startDate,
           lte: endDate,
