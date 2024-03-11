@@ -19,7 +19,7 @@ export class IncomesService {
     });
   }
 
-  async deleteIncome(id: string) {
+  async deleteIncome({ id }) {
     return this.prisma.income.delete({
       where: {
         id: id,
@@ -49,12 +49,12 @@ export class IncomesService {
   }
 
 
-  async getIncomeByMonth(userId: string, month: number) {
-    const startDate = new Date(new Date().getFullYear(), month - 1, 1);
+  async getIncomeByMonth(data) {
+    const startDate = new Date(new Date().getFullYear(), data.month - 1, 1);
     const endDate = new Date(
       new Date().getFullYear(),
-      month,
-      0,
+      data.month,
+      0,  
       23,
       59,
       59,
@@ -63,12 +63,12 @@ export class IncomesService {
 
     return this.prisma.income.findMany({
       where: {
-        userId: userId,
+        userId: data.email,
         createdAt: {
           gte: startDate,
           lte: endDate,
         },
       },
     });
-  }
+}
 }

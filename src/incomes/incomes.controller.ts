@@ -26,11 +26,14 @@ export class IncomesController {
     }
   }
 
-  @Get('/get-income-by-month')
+  @Get('/get-income-by-month/:month/:email')
   @UseGuards(JwtAuthGuard)
-  async getIncomeByMonth(@Req() request: Request, @Res() response: Response):Promise<any>{
+  async getExpenseByMonth(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.getIncomeByMonth(request.body.userId, request.body.month);
+      const result = await this.usersService.getIncomeByMonth({
+        email: request.params.email,
+        month: parseInt(request.params.month)
+      });
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',
@@ -65,6 +68,26 @@ export class IncomesController {
       return response.status(500).json({
         status: 'Ok!',
         message : 'Internal Server Error!'
+      })
+    }
+  }
+
+  @Post('/delete-income')
+  @UseGuards(JwtAuthGuard)
+  async deleteExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
+    try{
+      const result = await this.usersService.deleteIncome(request.body);
+      console.log(result);
+      
+      return response.status(200).json({
+        status: 'Ok!',
+        message: 'Successfully fetch data!',
+        result: result
+      })
+    }catch(err){
+      return response.status(500).json({
+        status: 'Ok!',
+        message : err
       })
     }
   }
