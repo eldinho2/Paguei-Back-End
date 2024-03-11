@@ -19,7 +19,7 @@ export class ExpensesService {
     });
   }
 
-  async deleteExpense(id: string) {
+  async deleteExpense({id}) {
     return this.prisma.expense.delete({
       where: {
         id: id,
