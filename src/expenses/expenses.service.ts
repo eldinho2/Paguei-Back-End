@@ -68,6 +68,7 @@ export class ExpensesService {
           gte: startDate,
           lte: endDate,
         },
+        fixed: true,
       },
     });
 }
