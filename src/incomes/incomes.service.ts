@@ -64,10 +64,17 @@ export class IncomesService {
     return this.prisma.income.findMany({
       where: {
         userId: data.email,
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
+        OR: [
+          {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
+          {
+            fixed: true,
+          },
+        ],
       },
     });
 }
