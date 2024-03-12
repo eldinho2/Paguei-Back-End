@@ -64,12 +64,19 @@ export class ExpensesService {
     return this.prisma.expense.findMany({
       where: {
         userId: data.email,
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
-        fixed: true,
+        OR: [
+          {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
+          {
+            fixed: true,
+          },
+        ],
       },
     });
+  }
 }
 }
