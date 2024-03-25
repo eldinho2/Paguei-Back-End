@@ -19,7 +19,7 @@ export class ExpensesService {
     });
   }
 
-  async deleteExpense({id}) {
+  async deleteExpense({ id }) {
     return this.prisma.expense.delete({
       where: {
         id: id,
@@ -40,7 +40,7 @@ export class ExpensesService {
     });
   }
 
-  async getAllUserExpensives(data: User) {    
+  async getAllUserExpensives(data: User) {
     return this.prisma.expense.findMany({
       where: {
         userId: data.email,
@@ -48,18 +48,10 @@ export class ExpensesService {
     });
   }
 
-
   async getExpenseByMonth(data) {
-    const startDate = new Date(new Date().getFullYear(), data.month - 1, 1);
-    const endDate = new Date(
-      new Date().getFullYear(),
-      data.month,
-      0,  
-      23,
-      59,
-      59,
-      999,
-    );
+
+    const startDate = new Date(data.year, data.month - 1, 1);
+    const endDate = new Date(data.year, data.month, 0, 23, 59, 59, 999);
 
     return this.prisma.expense.findMany({
       where: {

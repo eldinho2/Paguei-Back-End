@@ -26,13 +26,14 @@ export class IncomesController {
     }
   }
 
-  @Get('/get-income-by-month/:month/:email')
+  @Get('/get-income-by-month/:month/:year/:email')
   @UseGuards(JwtAuthGuard)
   async getExpenseByMonth(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
       const result = await this.usersService.getIncomeByMonth({
         email: request.params.email,
-        month: parseInt(request.params.month)
+        month: parseInt(request.params.month),
+        year: parseInt(request.params.year)
       });
       return response.status(200).json({
         status: 'Ok!',

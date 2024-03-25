@@ -26,13 +26,14 @@ export class ExpensesController {
     }
   }
 
-  @Get('/get-expense-by-month/:month/:email')
+  @Get('/get-expense-by-month/:month/:year/:email')
   @UseGuards(JwtAuthGuard)
   async getExpenseByMonth(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
       const result = await this.usersService.getExpenseByMonth({
         email: request.params.email,
-        month: parseInt(request.params.month)
+        month: parseInt(request.params.month),
+        year: parseInt(request.params.year)
       });
       return response.status(200).json({
         status: 'Ok!',

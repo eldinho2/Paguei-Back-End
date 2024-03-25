@@ -50,16 +50,9 @@ export class IncomesService {
 
 
   async getIncomeByMonth(data) {
-    const startDate = new Date(new Date().getFullYear(), data.month - 1, 1);
-    const endDate = new Date(
-      new Date().getFullYear(),
-      data.month,
-      0,  
-      23,
-      59,
-      59,
-      999,
-    );
+    
+    const startDate = new Date(data.year, data.month - 1, 1);
+    const endDate = new Date(data.year, data.month, 0, 23, 59, 59, 999);
 
     return this.prisma.income.findMany({
       where: {
