@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Put, Req, Res, UseGuards } from "@nestjs/common";
 import { IncomesService } from "./incomes.service";
 import {Request,Response} from 'express'
 import { JwtAuthGuard } from "src/authentication/auth.guard";
@@ -78,6 +78,26 @@ export class IncomesController {
   async deleteExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
       const result = await this.usersService.deleteIncome(request.body);
+      console.log(result);
+      
+      return response.status(200).json({
+        status: 'Ok!',
+        message: 'Successfully fetch data!',
+        result: result
+      })
+    }catch(err){
+      return response.status(500).json({
+        status: 'Ok!',
+        message : err
+      })
+    }
+  }
+
+  @Put('/update-income')
+  @UseGuards(JwtAuthGuard)
+  async updateExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
+    try{
+      const result = await this.usersService.updateIncome(request.body);
       console.log(result);
       
       return response.status(200).json({

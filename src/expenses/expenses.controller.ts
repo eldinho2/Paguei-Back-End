@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Put, Req, Res, UseGuards } from "@nestjs/common";
 import { ExpensesService } from "./expenses.service";
 import {Request,Response} from 'express'
 import { JwtAuthGuard } from "src/authentication/auth.guard";
@@ -77,9 +77,7 @@ export class ExpensesController {
   @UseGuards(JwtAuthGuard)
   async deleteExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.deleteExpense(request.body);
-      console.log(result);
-      
+      const result = await this.usersService.deleteExpense(request.body);      
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',
@@ -89,6 +87,24 @@ export class ExpensesController {
       return response.status(500).json({
         status: 'Ok!',
         message : err
+      })
+    }
+  }
+
+  @Put('/update-expense')
+  @UseGuards(JwtAuthGuard)
+  async updateExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
+    try{
+      const result = await this.usersService.updateExpense(request.body);
+      return response.status(200).json({
+        status: 'Ok!',
+        message: 'Successfully fetch data!',
+        result: result
+      })
+    }catch(err){
+      return response.status(500).json({
+        status: 'Ok!',
+        message : 'Internal Server Error!'
       })
     }
   }
