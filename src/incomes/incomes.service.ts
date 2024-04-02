@@ -48,7 +48,6 @@ export class IncomesService {
     });
   }
 
-
   async getIncomeByMonth(data) {
     
     const startDate = new Date(data.year, data.month - 1, 1);
