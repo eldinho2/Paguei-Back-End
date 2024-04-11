@@ -1,6 +1,4 @@
-import { Prisma } from "@prisma/client";
-
-export class Expense implements Prisma.ExpenseUncheckedCreateInput {
+export class Expense {
   id?: string;
   amount: number;
   description: string;
