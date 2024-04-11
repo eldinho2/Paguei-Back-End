@@ -1,7 +1,15 @@
 import { PrismaService } from 'src/prisma.service';
 import { Income } from './incomes.model';
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+
+type User = {
+  id: string;
+  email: string;
+  name: string;
+  image: string;
+  createdAt: Date;
+  updateAt: Date;
+}
 
 @Injectable()
 export class IncomesService {
