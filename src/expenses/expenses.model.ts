@@ -5,4 +5,5 @@ export class Expense {
   fixed: boolean;
   userId: string;
   createdAt?: string | Date;
+  installments?: number;
 }

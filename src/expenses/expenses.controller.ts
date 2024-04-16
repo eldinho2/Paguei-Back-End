@@ -58,7 +58,8 @@ export class ExpensesController {
         name: "",
         image: "",
         createdAt: undefined,
-        updateAt: undefined
+        updateAt: undefined,
+        installments: 1
       });
       return response.status(200).json({
         status: 'Ok!',

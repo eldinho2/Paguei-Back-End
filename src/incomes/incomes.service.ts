@@ -9,6 +9,7 @@ type User = {
   image: string;
   createdAt: Date;
   updateAt: Date;
+  installments: number;
 }
 
 @Injectable()
@@ -16,6 +17,26 @@ export class IncomesService {
   constructor(private prisma: PrismaService) {}
 
   async createIncome(data: Income) {
+    if (data.installments > 1) {
+
+      const amount = data.amount / data.installments;
+      const expirationDate = new Date(data.createdAt);
+      const creationMonth = expirationDate.getMonth(); 
+    
+      expirationDate.setMonth(creationMonth + data.installments - 1);
+    
+      return this.prisma.income.create({
+        data: {
+          amount: amount,
+          description: data.description,
+          fixed: data.fixed,
+          userId: data.userId,
+          createdAt: data.createdAt,
+          expiresAt: expirationDate,
+        },
+      });
+    } 
+    
     return this.prisma.income.create({
       data: {
         amount: data.amount,
@@ -57,25 +78,45 @@ export class IncomesService {
   }
 
   async getIncomeByMonth(data) {
-    
     const startDate = new Date(data.year, data.month - 1, 1);
     const endDate = new Date(data.year, data.month, 0, 23, 59, 59, 999);
-
-    return this.prisma.income.findMany({
+  
+    console.log('startDate:', startDate);
+    console.log('endDate:', endDate);
+  
+    const incomes = await this.prisma.income.findMany({
       where: {
         userId: data.email,
         OR: [
           {
-            createdAt: {
-              gte: startDate,
-              lte: endDate,
-            },
+            OR: [
+              {
+                createdAt: {
+                  gte: startDate,
+                  lte: endDate,
+                },
+              },
+              {
+                fixed: true,
+              },
+            ],
           },
           {
-            fixed: true,
+            AND: [
+              {
+                expiresAt: {
+                  gte: startDate,
+                },
+              },
+              {
+                fixed: false,
+              },
+            ],
           },
         ],
       },
     });
-}
+  
+    return incomes;
+  }
 }

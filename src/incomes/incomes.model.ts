@@ -5,4 +5,5 @@ export class Income {
   fixed: boolean;
   userId: string;
   createdAt?: string | Date;
+  installments?: number;
 }

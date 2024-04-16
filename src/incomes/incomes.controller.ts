@@ -58,7 +58,8 @@ export class IncomesController {
         name: "",
         image: "",
         createdAt: undefined,
-        updateAt: undefined
+        updateAt: undefined,
+        installments: 1
       });
       return response.status(200).json({
         status: 'Ok!',
@@ -98,8 +99,6 @@ export class IncomesController {
   async updateExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
       const result = await this.usersService.updateIncome(request.body);
-      console.log(result);
-      
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',

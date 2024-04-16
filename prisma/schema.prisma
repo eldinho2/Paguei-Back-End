@@ -27,6 +27,7 @@ model Expense {
   description String
   fixed       Boolean
   createdAt   DateTime @default(now())
+  expiresAt   DateTime?
   updatedAt   DateTime @updatedAt
   User        User    @relation(fields: [userId], references: [email])
   userId      String
@@ -38,6 +39,7 @@ model Income {
   description String
   fixed       Boolean
   createdAt   DateTime @default(now())
+  expiresAt   DateTime?
   updatedAt   DateTime @updatedAt
   User        User    @relation(fields: [userId], references: [email])
   userId      String
