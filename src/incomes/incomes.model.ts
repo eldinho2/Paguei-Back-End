@@ -6,4 +6,5 @@ export class Income {
   userId: string;
   createdAt?: string | Date;
   installments?: number;
+  expiresAt?: string | Date;
 }
