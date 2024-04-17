@@ -81,9 +81,6 @@ export class IncomesService {
     const startDate = new Date(data.year, data.month - 1, 1);
     const endDate = new Date(data.year, data.month, 0, 23, 59, 59, 999);
   
-    console.log('startDate:', startDate);
-    console.log('endDate:', endDate);
-  
     const incomes = await this.prisma.income.findMany({
       where: {
         userId: data.email,
