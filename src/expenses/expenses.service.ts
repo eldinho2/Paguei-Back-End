@@ -102,6 +102,9 @@ export class ExpensesService {
           {
             AND: [
               {
+                createdAt: {
+                  lte: startDate,
+                },
                 expiresAt: {
                   gte: startDate,
                 },

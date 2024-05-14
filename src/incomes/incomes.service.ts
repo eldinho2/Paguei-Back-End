@@ -101,6 +101,9 @@ export class IncomesService {
           {
             AND: [
               {
+                createdAt: {
+                  lte: startDate,
+                },
                 expiresAt: {
                   gte: startDate,
                 },
