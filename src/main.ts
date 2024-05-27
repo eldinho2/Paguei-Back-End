@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const cors ={
-    origin: ['http://localhost:3000', process.env.FRONTEND_URL],
+    origin: ['http://localhost:3000', process.env.FRONTEND_URL, 'https://paguei.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
   }
 
