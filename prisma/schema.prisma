@@ -26,6 +26,7 @@ model Expense {
   amount      Float
   description String
   fixed       Boolean
+  installment Int?
   createdAt   DateTime @default(now())
   expiresAt   DateTime?
   updatedAt   DateTime @updatedAt
@@ -38,6 +39,7 @@ model Income {
   amount      Float
   description String
   fixed       Boolean
+  installment Int?
   createdAt   DateTime @default(now())
   expiresAt   DateTime?
   updatedAt   DateTime @updatedAt

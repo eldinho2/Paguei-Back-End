@@ -33,6 +33,7 @@ export class IncomesService {
           userId: data.userId,
           createdAt: data.createdAt,
           expiresAt: expirationDate,
+          installment: data.installments,
         },
       });
     } 
