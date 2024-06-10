@@ -33,7 +33,7 @@ export class ExpensesService {
           userId: data.userId,
           createdAt: data.createdAt,
           expiresAt: expirationDate,
-          installment: data.installments,
+          installments: data.installments,
         },
       });
     } 
