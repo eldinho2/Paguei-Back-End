@@ -2,6 +2,7 @@ import { INestApplication, OnModuleInit } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 
 export class PrismaService extends PrismaClient implements OnModuleInit {
+  expenseInstallment: any;
   async onModuleInit() {
     await this.$connect();
   }

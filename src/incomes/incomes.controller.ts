@@ -59,7 +59,7 @@ export class IncomesController {
         image: "",
         createdAt: undefined,
         updateAt: undefined,
-        installments: 1
+        totalInstallments: 1
       });
       return response.status(200).json({
         status: 'Ok!',

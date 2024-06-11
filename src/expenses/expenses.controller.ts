@@ -19,6 +19,8 @@ export class ExpensesController {
         result: result
       })
     }catch(err){
+      console.log(err);
+      
       return response.status(500).json({
         status: 'Ok!',
         message : 'Internal Server Error!'
@@ -59,7 +61,7 @@ export class ExpensesController {
         image: "",
         createdAt: undefined,
         updateAt: undefined,
-        installments: 1
+        totalInstallments: 1
       });
       return response.status(200).json({
         status: 'Ok!',

@@ -1,6 +1,7 @@
 import { PrismaService } from '../prisma.service';
 import { Income } from './incomes.model';
 import { Injectable } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 type User = {
   id: string;
@@ -9,7 +10,7 @@ type User = {
   image: string;
   createdAt: Date;
   updateAt: Date;
-  installments: number;
+  totalInstallments: number;
 }
 
 @Injectable()
@@ -17,30 +18,40 @@ export class IncomesService {
   constructor(private prisma: PrismaService) {}
 
   async createIncome(data: Income) {
-    if (data.installments > 1) {
-
-      const amount = data.amount / data.installments;
-      const expirationDate = new Date(data.createdAt);
-      const creationMonth = expirationDate.getMonth(); 
-    
-      expirationDate.setMonth(creationMonth + data.installments - 1);
-    
-      return this.prisma.income.create({
-        data: {
+    console.log(data);
+  
+    if (data.totalInstallments > 1) {
+      const amount = data.amount / data.totalInstallments;
+      const groupId = uuid();
+      const incomes = [];
+  
+      for (let i = 0; i < data.totalInstallments; i++) {
+        const expirationDate = new Date(data.createdAt);
+        expirationDate.setMonth(expirationDate.getMonth() + i);
+  
+        incomes.push({
           amount: amount,
+          is_paid: false,
           description: data.description,
           fixed: data.fixed,
           userId: data.userId,
-          createdAt: data.createdAt,
+          createdAt: new Date(data.createdAt),
           expiresAt: expirationDate,
-          installments: data.installments,
-        },
+          installment: i + 1,
+          total_installments: data.totalInstallments,
+          group_id: groupId,
+        });
+      }
+  
+      return this.prisma.income.createMany({
+        data: incomes,
       });
     } 
-    
+  
     return this.prisma.income.create({
       data: {
         amount: data.amount,
+        is_paid: data.isPaid,
         description: data.description,
         fixed: data.fixed,
         userId: data.userId,
@@ -87,7 +98,7 @@ export class IncomesService {
         userId: data.email,
         OR: [
           {
-            OR: [
+            AND: [
               {
                 createdAt: {
                   gte: startDate,
@@ -95,22 +106,25 @@ export class IncomesService {
                 },
               },
               {
-                fixed: true,
+                installment: null,
               },
             ],
           },
           {
+            fixed: true,
+          },
+          {
             AND: [
               {
-                createdAt: {
-                  lte: startDate,
-                },
                 expiresAt: {
                   gte: startDate,
+                  lte: endDate,
                 },
               },
               {
-                fixed: false,
+                installment: {
+                  not: null,
+                },
               },
             ],
           },

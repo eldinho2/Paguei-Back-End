@@ -1,10 +1,11 @@
 export class Expense {
   id?: string;
   amount: number;
+  isPaid: boolean;
   description: string;
   fixed: boolean;
   userId: string;
   createdAt?: string | Date;
-  installments?: number;
+  totalInstallments?: number;
   expiresAt?: string | Date;
 }
