@@ -31,7 +31,7 @@ export class IncomesService {
   
         incomes.push({
           amount: amount,
-          is_paid: false,
+          isPaid: false,
           description: data.description,
           fixed: data.fixed,
           userId: data.userId,
@@ -51,7 +51,7 @@ export class IncomesService {
     return this.prisma.income.create({
       data: {
         amount: data.amount,
-        is_paid: data.isPaid,
+        isPaid: data.isPaid,
         description: data.description,
         fixed: data.fixed,
         userId: data.userId,
