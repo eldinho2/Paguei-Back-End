@@ -17,9 +17,7 @@ type User = {
 export class IncomesService {
   constructor(private prisma: PrismaService) {}
 
-  async createIncome(data: Income) {
-    console.log(data);
-  
+  async createIncome(data: Income) {  
     if (data.totalInstallments > 1) {
       const amount = data.amount / data.totalInstallments;
       const groupId = uuid();
@@ -43,12 +41,31 @@ export class IncomesService {
         });
       }
   
-      return this.prisma.income.createMany({
+      await this.prisma.income.createMany({
         data: incomes,
       });
-    } 
   
-    return this.prisma.income.create({
+      return {
+        status: "Ok!",
+        message: "Successfully fetch data!",
+        result: {
+          id: groupId,
+          groupId: groupId,
+          isPaid: false,
+          amount: data.amount,
+          description: data.description,
+          fixed: data.fixed,
+          installment: 1,
+          totalInstallments: data.totalInstallments,
+          createdAt: data.createdAt,
+          expiresAt: incomes[incomes.length - 1].expiresAt,
+          updatedAt: data.createdAt,
+          userId: data.userId,
+        }
+      };
+    }
+  
+    const createdExpense = await this.prisma.income.create({
       data: {
         amount: data.amount,
         isPaid: data.isPaid,
@@ -58,6 +75,14 @@ export class IncomesService {
         createdAt: data.createdAt,
       },
     });
+  
+    return {
+      status: "Ok!",
+      message: "Successfully fetch data!",
+      result: {
+        data : createdExpense
+      }
+    };
   }
 
   async deleteIncome({ id }) {
