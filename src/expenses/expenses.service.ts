@@ -61,7 +61,7 @@ export class ExpensesService {
       };
     }
   
-    const createdExpense = await this.prisma.expense.create({
+    return await this.prisma.expense.create({
       data: {
         amount: data.amount,
         isPaid: data.isPaid,
@@ -71,14 +71,7 @@ export class ExpensesService {
         createdAt: data.createdAt,
       },
     });
-  
-    return {
-      status: "Ok!",
-      message: "Successfully fetch data!",
-      result: {
-        data : createdExpense
-      }
-    };
+
   }
 
   async deleteExpense({ id }) {
