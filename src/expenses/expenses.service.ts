@@ -46,9 +46,6 @@ export class ExpensesService {
       });
   
       return {
-        status: "Ok!",
-        message: "Successfully fetch data!",
-        result: {
           id: groupId,
           groupId: groupId,
           isPaid: false,
@@ -61,7 +58,6 @@ export class ExpensesService {
           expiresAt: expenses[expenses.length - 1].expiresAt,
           updatedAt: data.createdAt,
           userId: data.userId,
-        }
       };
     }
   

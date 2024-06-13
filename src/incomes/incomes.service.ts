@@ -46,9 +46,6 @@ export class IncomesService {
       });
   
       return {
-        status: "Ok!",
-        message: "Successfully fetch data!",
-        result: {
           id: groupId,
           groupId: groupId,
           isPaid: false,
@@ -61,8 +58,7 @@ export class IncomesService {
           expiresAt: incomes[incomes.length - 1].expiresAt,
           updatedAt: data.createdAt,
           userId: data.userId,
-        }
-      };
+        };
     }
   
     const createdExpense = await this.prisma.income.create({
