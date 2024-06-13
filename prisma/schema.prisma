@@ -23,13 +23,13 @@ model User {
 
 model Expense {
   id          String   @unique @default(uuid())
-  group_id    String   @default(uuid())
-  is_paid     Boolean
+  groupId    String   @default(uuid())
+  isPaid     Boolean
   amount      Float
   description String
   fixed       Boolean
   installment Int?
-  total_installments Int?
+  totalInstallments Int?
   createdAt   DateTime @default(now())
   expiresAt   DateTime?
   updatedAt   DateTime @updatedAt
@@ -39,13 +39,13 @@ model Expense {
 
 model Income {
   id          String   @unique @default(uuid())
-  group_id    String   @default(uuid())
-  is_paid     Boolean
+  groupId    String   @default(uuid())
+  isPaid     Boolean
   amount      Float
   description String
   fixed       Boolean
   installment Int?
-  total_installments Int?
+  totalInstallments Int?
   createdAt   DateTime @default(now())
   expiresAt   DateTime?
   updatedAt   DateTime @updatedAt

@@ -38,8 +38,8 @@ export class IncomesService {
           createdAt: new Date(data.createdAt),
           expiresAt: expirationDate,
           installment: i + 1,
-          total_installments: data.totalInstallments,
-          group_id: groupId,
+          totalInstallments: data.totalInstallments,
+          groupId: groupId,
         });
       }
   
