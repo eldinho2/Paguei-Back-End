@@ -17,16 +17,17 @@ type User = {
 export class ExpensesService {
   constructor(private prisma: PrismaService) {}
 
-  async createExpense(data: Expense) {  
+  async createExpense(data: Expense) {
+
     if (data.totalInstallments > 1) {
       const amount = data.amount / data.totalInstallments;
-      const groupId = uuid(); // Crie um UUID para agrupar as parcelas
+      const groupId = uuid();
       const expenses = [];
-  
+
       for (let i = 0; i < data.totalInstallments; i++) {
         const expirationDate = new Date(data.createdAt);
         expirationDate.setMonth(expirationDate.getMonth() + i);
-  
+
         expenses.push({
           amount: amount,
           isPaid: false,
@@ -40,28 +41,33 @@ export class ExpensesService {
           groupId: groupId,
         });
       }
-  
+
       await this.prisma.expense.createMany({
         data: expenses,
       });
-  
+
+      const firstExpense = await this.prisma.expense.findFirst({
+        where: { groupId: groupId },
+        orderBy: { createdAt: 'asc' }
+      });
+
       return {
-          id: data.id,
-          groupId: data.groupId,
+          id: firstExpense.id,
+          groupId: groupId,
           isPaid: false,
-          amount: data.amount,
+          amount: amount,
           description: data.description,
           fixed: data.fixed,
-          installment: 1,
+          installment: null,
           totalInstallments: data.totalInstallments,
-          createdAt: data.createdAt,
-          expiresAt: expenses[expenses.length - 1].expiresAt,
-          updatedAt: data.createdAt,
+          createdAt: new Date(data.createdAt),
+          expiresAt: null,
+          updatedAt: new Date(),
           userId: data.userId,
       };
     }
-  
-    return await this.prisma.expense.create({
+
+    const createdExpense = await this.prisma.expense.create({
       data: {
         amount: data.amount,
         isPaid: data.isPaid,
@@ -72,6 +78,20 @@ export class ExpensesService {
       },
     });
 
+    return {
+        id: createdExpense.id,
+        groupId: createdExpense.groupId || null,
+        isPaid: createdExpense.isPaid,
+        amount: createdExpense.amount,
+        description: createdExpense.description,
+        fixed: createdExpense.fixed,
+        installment: createdExpense.installment || null,
+        totalInstallments: createdExpense.totalInstallments || null,
+        createdAt: createdExpense.createdAt,
+        expiresAt: createdExpense.expiresAt || null,
+        updatedAt: createdExpense.updatedAt,
+        userId: createdExpense.userId,
+    };
   }
 
   async deleteExpense({ id, groupId, totalInstallments}) {
