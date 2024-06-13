@@ -46,8 +46,8 @@ export class IncomesService {
       });
   
       return {
-          id: groupId,
-          groupId: groupId,
+          id: data.id,
+          groupId: data.groupId,
           isPaid: false,
           amount: data.amount,
           description: data.description,
@@ -73,13 +73,21 @@ export class IncomesService {
     });
   }
 
-  async deleteIncome({ id }) {
-    return this.prisma.income.delete({
-      where: {
-        id: id,
-      },
-    });
-  }
+  async deleteIncome({ id, groupId, totalInstallments}) {
+      if (totalInstallments > 1) {
+        return this.prisma.expense.deleteMany({
+          where: {
+            groupId: groupId,
+          },
+        });
+      }
+  
+      return this.prisma.expense.delete({
+        where: {
+          id: id,
+        },
+      });
+    }
 
   async updateIncome(data: Income) {
     return this.prisma.income.update({

@@ -8,4 +8,5 @@ export class Expense {
   createdAt?: string | Date;
   totalInstallments?: number;
   expiresAt?: string | Date;
+  groupId: string;
 }

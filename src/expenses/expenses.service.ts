@@ -46,8 +46,8 @@ export class ExpensesService {
       });
   
       return {
-          id: groupId,
-          groupId: groupId,
+          id: data.id,
+          groupId: data.groupId,
           isPaid: false,
           amount: data.amount,
           description: data.description,
@@ -74,7 +74,15 @@ export class ExpensesService {
 
   }
 
-  async deleteExpense({ id }) {
+  async deleteExpense({ id, groupId, totalInstallments}) {
+    if (totalInstallments > 1) {
+      return this.prisma.expense.deleteMany({
+        where: {
+          groupId: groupId,
+        },
+      });
+    }
+
     return this.prisma.expense.delete({
       where: {
         id: id,

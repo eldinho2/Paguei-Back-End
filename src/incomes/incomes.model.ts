@@ -8,4 +8,5 @@ export class Income {
   createdAt?: string | Date;
   totalInstallments?: number;
   expiresAt?: string | Date;
+  groupId: string;
 }
