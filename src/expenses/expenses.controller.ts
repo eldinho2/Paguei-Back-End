@@ -57,6 +57,7 @@ export class ExpensesController {
       const result = await this.usersService.getAllUserExpensives({
         email: request.params.email,
         id: "",
+        billType: "",
         name: "",
         image: "",
         createdAt: undefined,
@@ -100,6 +101,7 @@ export class ExpensesController {
     try{
       const result = await this.usersService.updateExpense({
         id: request.params.id,
+        billType: request.body.billType,
         amount: request.body.amount,
         isPaid: request.body.isPaid,
         description: request.body.description,

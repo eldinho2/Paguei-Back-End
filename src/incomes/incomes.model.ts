@@ -1,5 +1,6 @@
 export class Income {
   id?: string;
+  billType: string;
   amount: number;
   isPaid: boolean;
   description: string;

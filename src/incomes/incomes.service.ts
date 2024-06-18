@@ -11,6 +11,7 @@ type User = {
   createdAt: Date;
   updateAt: Date;
   totalInstallments: number;
+  billType: string;
 }
 
 @Injectable()
@@ -30,6 +31,7 @@ export class IncomesService {
         incomes.push({
           amount: amount,
           isPaid: false,
+          billType: data.billType,
           description: data.description,
           fixed: data.fixed,
           userId: data.userId,
@@ -53,6 +55,7 @@ export class IncomesService {
       return {
           id: firstIncome.id,
           groupId: groupId,
+          billType: data.billType,
           isPaid: false,
           amount: amount,
           description: data.description,
@@ -68,6 +71,7 @@ export class IncomesService {
 
     const createdIncome = await this.prisma.income.create({
       data: {
+        billType: data.billType,
         amount: data.amount,
         isPaid: data.isPaid,
         description: data.description,
@@ -80,6 +84,7 @@ export class IncomesService {
     return {
         id: createdIncome.id,
         groupId: createdIncome.groupId || null,
+        billType: createdIncome.billType || null,
         isPaid: createdIncome.isPaid,
         amount: createdIncome.amount,
         description: createdIncome.description,

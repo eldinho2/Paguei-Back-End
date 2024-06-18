@@ -55,6 +55,7 @@ export class IncomesController {
       const result = await this.usersService.getAllUserIncomes({
         email: request.params.email,
         id: "",
+        billType: "",
         name: "",
         image: "",
         createdAt: undefined,
@@ -100,6 +101,7 @@ export class IncomesController {
     try{
       const result = await this.usersService.updateIncome({
         id: request.params.id,
+        billType: request.body.billType,
         amount: request.body.amount,
         isPaid: request.body.isPaid,
         description: request.body.description,

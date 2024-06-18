@@ -11,6 +11,7 @@ type User = {
   createdAt: Date;
   updateAt: Date;
   totalInstallments: number;
+  billType: string;
 }
 
 @Injectable()
@@ -31,6 +32,7 @@ export class ExpensesService {
         expenses.push({
           amount: amount,
           isPaid: false,
+          billType: data.billType,
           description: data.description,
           fixed: data.fixed,
           userId: data.userId,
@@ -54,6 +56,7 @@ export class ExpensesService {
       return {
           id: firstExpense.id,
           groupId: groupId,
+          billType: data.billType,
           isPaid: false,
           amount: amount,
           description: data.description,
@@ -71,6 +74,7 @@ export class ExpensesService {
       data: {
         amount: data.amount,
         isPaid: data.isPaid,
+        billType: data.billType,
         description: data.description,
         fixed: data.fixed,
         userId: data.userId,
