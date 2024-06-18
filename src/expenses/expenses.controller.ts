@@ -94,11 +94,22 @@ export class ExpensesController {
     }
   }
 
-  @Put('/update-expense')
+  @Put('/update-expense/:id')
   @UseGuards(JwtAuthGuard)
   async updateExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
-      const result = await this.usersService.updateExpense(request.body);
+      const result = await this.usersService.updateExpense({
+        id: request.params.id,
+        amount: request.body.amount,
+        isPaid: request.body.isPaid,
+        description: request.body.description,
+        fixed: request.body.fixed,
+        userId: request.body.userId,
+        createdAt: request.body.createdAt,
+        totalInstallments: request.body.totalInstallments,
+        expiresAt: request.body.expiresAt,
+        groupId: request.body.groupId
+      })   
       return response.status(200).json({
         status: 'Ok!',
         message: 'Successfully fetch data!',

@@ -117,8 +117,14 @@ export class ExpensesService {
       },
       data: {
         amount: data.amount,
+        isPaid: data.isPaid,
         description: data.description,
         fixed: data.fixed,
+        userId: data.userId,
+        createdAt: data.createdAt,
+        totalInstallments: data.totalInstallments,
+        expiresAt: data.expiresAt,
+        groupId: data.groupId,
       },
     });
   }
