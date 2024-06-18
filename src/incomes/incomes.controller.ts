@@ -95,7 +95,7 @@ export class IncomesController {
     }
   }
 
-  @Put('/update-income')
+  @Put('/update-income/:id')
   @UseGuards(JwtAuthGuard)
   async updateExpense(@Req() request: Request, @Res() response: Response):Promise<any>{
     try{
