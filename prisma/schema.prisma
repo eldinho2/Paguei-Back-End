@@ -19,6 +19,7 @@ model User {
   updateAt  DateTime  @updatedAt()
   expenses  Expense[]
   incomes   Income[]
+  wakeStatus Boolean
 }
 
 model Expense {
