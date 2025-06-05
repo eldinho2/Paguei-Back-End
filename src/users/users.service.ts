@@ -8,6 +8,7 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   private wakeStatus: boolean = false;
+  private wakeLogs: Array<{ timestamp: Date; status: boolean; text: string }> = [];
 
   async getUser(email: string) {
     const exists = await this.prisma.user.findUnique({
@@ -54,8 +55,17 @@ export class UsersService {
     return this.wakeStatus;
   }
 
-  async setWakeStatus(status: boolean) {
+  async setWakeStatus(status: boolean, text: string = '') {
     this.wakeStatus = status;
+    this.wakeLogs.push({
+      timestamp: new Date(),
+      status: status,
+      text: text
+    });
     return this.wakeStatus;
+  }
+
+  async getWakeLogs() {
+    return this.wakeLogs;
   }
 }
