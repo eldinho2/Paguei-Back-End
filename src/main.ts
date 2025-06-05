@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   app.enableCors({
-    origin: ['https://pico-wake.vercel.app', 'http://localhost:3000'],
+    origin: ['https://pico-wake.vercel.app', 'http://localhost:3000', 'file://', 'null'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: 'Content-Type, Accept, Authorization',
